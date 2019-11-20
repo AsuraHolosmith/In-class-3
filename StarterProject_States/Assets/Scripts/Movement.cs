@@ -173,6 +173,8 @@ public class Movement : MonoBehaviour
                     // As long as there is some directional input
                     if (xRaw != 0 || yRaw != 0)
                     {
+                        // Dash using raw input values
+                        Dash(xRaw, yRaw);
                         currentState = PlayerState.DASHING;
                     }
                 }
@@ -212,7 +214,9 @@ public class Movement : MonoBehaviour
                 {
                     // As long as there is some directional input
                     if (xRaw != 0 || yRaw != 0)
-                    {                      
+                    {
+                        // Dash using raw input values
+                        Dash(xRaw, yRaw);
                         currentState = PlayerState.DASHING;
                     }
                 }
@@ -278,7 +282,7 @@ public class Movement : MonoBehaviour
                 // Jump when hitting the space bar
                 if (Input.GetButtonDown("Jump"))
                 {
-                    currentState = PlayerState.WALL_JUMPING;                   
+                    WallJump();                   
                 }
 
                 // Used when no longer on a wall
@@ -286,8 +290,10 @@ public class Movement : MonoBehaviour
                 {
                     wallGrab = false;
                     wallSlide = false;
-
-                    currentState = PlayerState.FALLING;
+                    if (wallJumped)
+                        currentState = PlayerState.WALL_JUMPING;
+                    else
+                        currentState = PlayerState.FALLING;
                 }
 
                 // changes state back to idle when touching the ground
@@ -329,6 +335,8 @@ public class Movement : MonoBehaviour
                     // As long as there is some directional input
                     if (xRaw != 0 || yRaw != 0)
                     {
+                        // Dash using raw input values
+                        Dash(xRaw, yRaw);
                         currentState = PlayerState.DASHING;
                     }
                 }
@@ -357,9 +365,6 @@ public class Movement : MonoBehaviour
             
             case PlayerState.DASHING:
 
-                // Dash using raw input values
-                Dash(xRaw, yRaw);
-
                 if (coll.onWall && Input.GetButton("Fire2") && canMove)
                 {
                     // Change state
@@ -387,8 +392,6 @@ public class Movement : MonoBehaviour
                 // Sets the jump animation
                 anim.SetTrigger("jump");
 
-                WallJump();
-
                 if (hasDashed)
                     currentState = PlayerState.FALLING;
                 else
@@ -408,6 +411,8 @@ public class Movement : MonoBehaviour
                         // As long as there is some directional input
                         if (xRaw != 0 || yRaw != 0)
                         {                         
+                            // Dash using raw input values
+                            Dash(xRaw, yRaw);
                             currentState = PlayerState.DASHING;
                         }
                     }
