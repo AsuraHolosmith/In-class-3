@@ -168,8 +168,6 @@ public class Movement : MonoBehaviour
                 // If left click and if dash is not on cooldown
                 if (Input.GetButtonDown("Fire1") && !hasDashed)
                 {
-                    if (!coll.onGround)
-                        currentState = PlayerState.JUMPING;
                     // As long as there is some directional input
                     if (xRaw != 0 || yRaw != 0)
                     {
